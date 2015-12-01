@@ -995,7 +995,9 @@ var
   ss: TStringStream;
 begin
   if FContentEncoding.IsEmpty then
-    FContentEncoding := 'UTF-8';
+    FContentEncoding := 'UTF-8'
+  else //Ezequiel J. Müller - In some situations come up with this " must be removed in such cases
+    FContentEncoding := StringReplace(FContentEncoding, '"', '', [rfReplaceAll, rfIgnoreCase]);
   ss := TStringStream.Create('', TEncoding.GetEncoding(FContentEncoding));
   try
     FBody.Position := 0;
