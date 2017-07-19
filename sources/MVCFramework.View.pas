@@ -37,8 +37,8 @@ uses
   Data.DB,
   MVCFramework.View.Cache,
   System.SysUtils,
-  SynMustache,
-  SynCommons,
+  //SynMustache,
+  //SynCommons,
   MVCFramework.Patches;
 
 type
@@ -172,16 +172,16 @@ end;
 procedure TMVCMustacheView.Execute;
 var
   LFileName: String;
-  LTemplate: RawUTF8;
-  LMEngine: TSynMustache;
+  LTemplate: String;
+  //LMEngine: TSynMustache;
   LPair: TPair<String, TJSONValue>;
   LJContext: TJSONObject;
 begin
   LFileName := GetRealFileName(ViewName);
   if not FileExists(LFileName) then
     raise EMVCFrameworkView.CreateFmt('View [%s] not found', [ViewName]);
-  LTemplate := StringToUTF8(TFile.ReadAllText(LFileName, TEncoding.UTF8));
-  LMEngine := TSynMustache.Parse(LTemplate);
+  LTemplate := TFile.ReadAllText(LFileName, TEncoding.UTF8);
+  //LMEngine := TSynMustache.Parse(LTemplate);
   LJContext := TJSONObject.Create;
   try
     if FViewModel <> nil then
@@ -196,7 +196,7 @@ begin
     raise;
   end;
 
-  FOutput := UTF8ToString(LMEngine.RenderJSON(LJContext.ToJSON));
+ // FOutput := UTF8ToString(LMEngine.RenderJSON(LJContext.ToJSON));
 end;
 
 end.
